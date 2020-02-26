@@ -1,6 +1,6 @@
 defmodule LayoutDemo.MixProject do
   use Mix.Project
-  @all_targets [:rpi3, :host]
+
   def project do
     [
       app: :layout_demo,
@@ -25,7 +25,8 @@ defmodule LayoutDemo.MixProject do
     [
       {:scenic, "~> 0.10"},
       {:scenic_driver_glfw, "~> 0.10", targets: :host},
-      {:scenic_layout_o_matic, "~> 0.4.0"}
+      {:scenic_layout_o_matic, path: "/Users/benwheat/workspace/layout_o_matic"},
+      {:mogrify, "~> 0.7.3"}
     ]
   end
 end

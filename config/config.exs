@@ -5,13 +5,13 @@ use Mix.Config
 # Configure the main viewport for the Scenic application
 config :layout_demo, :viewport, %{
   name: :main_viewport,
-  size: {700, 600},
-  default_scene: {LayoutDemo.Scene.Home, nil},
+  size: {1680, 1050},
+  default_scene: {HomeSlide, nil},
   drivers: [
     %{
       module: Scenic.Driver.Glfw,
       name: :glfw,
-      opts: [resizeable: false, title: "layout_demo"]
+      opts: [resizeable: true, title: "layout_demo"]
     }
   ]
 }
