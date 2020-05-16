@@ -3,7 +3,9 @@ defmodule SimpleGridSlide do
 
   import Scenic.Primitives
   alias Scenic.Graph
+  alias Scenic.ViewPort
   alias LayoutOMatic.TextPosition
+  alias LayoutOMatic.Grid
 
   @spec init(any, any) :: {:ok, any, {:push, map}}
   def init(%{graph: graph}, opts) do
@@ -25,12 +27,43 @@ defmodule SimpleGridSlide do
   end
 
   def handle_input(
+        {:key, {"G", :release, 0}},
+        _context,
+        %{graph: graph, viewport: vp} = state
+      ) do
+    {:ok, %ViewPort.Status{size: vp_size}} = ViewPort.info(vp)
+
+    this_graph =
+      graph
+      |> Graph.modify(:simple_grid_title_text, fn t -> update_opts(t, hidden: true) end)
+      |> add_specs_to_graph(
+        Grid.simple_grid(
+          vp_size,
+          {0, 0},
+          [
+            :simple_grid,
+            :simple_grid,
+            :simple_grid,
+            :simple_grid,
+            :simple_grid
+          ],
+          draw: true
+        )
+      )
+
+    state = Map.replace!(state, :graph, this_graph)
+    {:noreply, state, push: this_graph}
+  end
+
+  def handle_input(
         {:key, {"right", :release, 0}},
         _context,
         %{viewport: vp, graph: graph} = state
       ) do
     this_hidden_graph =
-      Graph.modify(graph, :simple_grid_title_text, fn t -> update_opts(t, hidden: true) end)
+      graph
+      |> Graph.modify(:simple_grid_title_text, fn t -> update_opts(t, hidden: true) end)
+      |> Graph.modify(:simple_grid, fn t -> update_opts(t, hidden: true) end)
 
     state = Map.replace!(state, :graph, this_hidden_graph)
     Scenic.ViewPort.set_root(vp, {LayoutOMaticSlide, state})
@@ -43,16 +76,20 @@ defmodule SimpleGridSlide do
         %{viewport: vp, graph: graph} = state
       ) do
     this_hidden_graph =
-      Graph.modify(graph, :simple_grid_title_text, fn t -> update_opts(t, hidden: true) end)
+      graph
+      |> Graph.modify(:simple_grid_title_text, fn t -> update_opts(t, hidden: true) end)
+      |> Graph.modify(:simple_grid, fn t -> update_opts(t, hidden: true) end)
 
     state = Map.replace!(state, :graph, this_hidden_graph)
-    Scenic.ViewPort.set_root(vp, {Home, state})
+    Scenic.ViewPort.set_root(vp, {HomeSlide, state})
     {:halt, state}
   end
 
   def handle_input({:key, {"left", :release, 0}}, _context, %{viewport: vp, graph: graph} = state) do
     this_hidden_graph =
-      Graph.modify(graph, :simple_grid_title_text, fn t -> update_opts(t, hidden: true) end)
+      graph
+      |> Graph.modify(:simple_grid_title_text, fn t -> update_opts(t, hidden: true) end)
+      |> Graph.modify(:simple_grid, fn t -> update_opts(t, hidden: true) end)
 
     state = Map.replace!(state, :graph, this_hidden_graph)
     Scenic.ViewPort.set_root(vp, {ThanksSlide, state})

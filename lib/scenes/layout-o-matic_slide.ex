@@ -9,13 +9,17 @@ defmodule LayoutOMaticSlide do
 
   @spec init(any, any) :: {:ok, any, {:push, map}}
   def init(%{graph: graph}, opts) do
-    [%{styles: %{t: center_translate}}] = Graph.get(graph, :center_group)
-    Scenic.Cache.Static.Texture.load(@layout_path, @layout_hash)
+    [%{styles: %{t: {center_x, center_y}}}] = Graph.get(graph, :center_group)
 
     this_graph =
       graph
-      |> rect({1080, 860}, fill: {:image, @layout_hash}, id: :layout_logo, t: {0, 0})
+      |> rect({1080, 860},
+        fill: {:image, @layout_hash},
+        id: :layout_logo,
+        t: {center_x - 550, center_y - 430}
+      )
 
+    Scenic.Cache.Static.Texture.load(@layout_path, @layout_hash)
     {:ok, %{graph: this_graph, viewport: opts[:viewport]}, push: this_graph}
   end
 
@@ -28,7 +32,7 @@ defmodule LayoutOMaticSlide do
       Graph.modify(graph, :layout_logo, fn t -> update_opts(t, hidden: true) end)
 
     state = Map.replace!(state, :graph, this_hidden_graph)
-    Scenic.ViewPort.set_root(vp, {Home, state})
+    Scenic.ViewPort.set_root(vp, {HomeSlide, state})
     {:halt, state}
   end
 
@@ -41,7 +45,7 @@ defmodule LayoutOMaticSlide do
       Graph.modify(graph, :layout_logo, fn t -> update_opts(t, hidden: true) end)
 
     state = Map.replace!(state, :graph, this_hidden_graph)
-    Scenic.ViewPort.set_root(vp, {Home, state})
+    Scenic.ViewPort.set_root(vp, {HomeSlide, state})
     {:halt, state}
   end
 

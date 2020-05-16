@@ -36,7 +36,7 @@ defmodule HomeSlide do
   end
 
   def handle_input({:key, {"right", :release, 0}}, _context, %{viewport: vp} = state) do
-    ViewPort.set_root(vp, {TitleSlide, state})
+    ViewPort.set_root(vp, {AboutMeSlide, state})
     {:halt, state}
   end
 

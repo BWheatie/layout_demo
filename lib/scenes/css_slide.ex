@@ -8,9 +8,12 @@ defmodule CSSSlide do
   @spec init(any, any) :: {:ok, any, {:push, map}}
   def init(%{graph: graph}, opts) do
     [%{styles: %{t: center_translate}}] = Graph.get(graph, :center_group)
+    [%{data: bottom_right_translate}] = Graph.get(graph, :bottom_right)
 
     text = "CSS"
-    font_size = 50
+    font_size = 75
+    other_text = "<Insert Peter Griffin Blinds dot gif>"
+    other_text_font_size = 40
 
     this_graph =
       graph
@@ -19,6 +22,12 @@ defmodule CSSSlide do
         fill: :black,
         font_size: font_size,
         t: TextPosition.center(text, center_translate, font_size)
+      )
+      |> text(other_text,
+        id: :css_text,
+        fill: :black,
+        font_size: other_text_font_size,
+        t: {elem(bottom_right_translate, 0) + 300, elem(bottom_right_translate, 1) - 60}
       )
 
     {:ok, %{graph: this_graph, viewport: opts[:viewport]}, push: this_graph}

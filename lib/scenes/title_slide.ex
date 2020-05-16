@@ -32,14 +32,14 @@ defmodule TitleSlide do
       ) do
     this_hidden_graph = Graph.modify(graph, :title_text, fn t -> update_opts(t, hidden: true) end)
     state = Map.replace!(state, :graph, this_hidden_graph)
-    Scenic.ViewPort.set_root(vp, {AboutMeSlide, state})
+    Scenic.ViewPort.set_root(vp, {ScenicSlide, state})
     {:halt, state}
   end
 
   def handle_input({:key, {"left", :release, 0}}, _context, %{viewport: vp, graph: graph} = state) do
     this_hidden_graph = Graph.modify(graph, :title_text, fn t -> update_opts(t, hidden: true) end)
     state = Map.replace!(state, :graph, this_hidden_graph)
-    Scenic.ViewPort.set_root(vp, {HomeSlide, state})
+    Scenic.ViewPort.set_root(vp, {ThanksSlide, state})
     {:halt, state}
   end
 
