@@ -7,6 +7,7 @@ defmodule AboutMeSlide do
 
   @spec init(any, any) :: {:ok, any, {:push, map}}
   def init(%{graph: graph}, opts) do
+    [%{styles: %{font: font_hash}}] = Graph.get(graph, :root_grid) |> IO.inspect()
     [%{styles: %{t: top_center_translate}}] = Graph.get(graph, :top_center_group)
     [%{styles: %{t: bottom_center_translate}}] = Graph.get(graph, :bottom_center_group)
 
@@ -19,7 +20,7 @@ defmodule AboutMeSlide do
 
     {twitter_x, twitter_y} =
       twitter_text_t =
-      TextPosition.center(twitter_text, bottom_center_translate, handles_font_size)
+      TextPosition.center(twitter_text, bottom_center_translate, handles_font_size, font_hash)
 
     this_graph =
       graph
@@ -27,14 +28,16 @@ defmodule AboutMeSlide do
         id: :about_me_title_text,
         fill: :black,
         font_size: title_font_size,
-        t: TextPosition.center(title_text, top_center_translate, title_font_size)
-      )
-      |> add_specs_to_graph(CustomComponents.twitter_handle(twitter_text, twitter_text_t))
-      |> add_specs_to_graph(
-        CustomComponents.github_handle(github_text, {twitter_x, twitter_y + 100})
+        t: TextPosition.center(title_text, top_center_translate, title_font_size, font_hash)
       )
       |> add_specs_to_graph(
-        CustomComponents.slack_handle(slack_text, {twitter_x, twitter_y + 200})
+        CustomComponents.twitter_handle(twitter_text, twitter_text_t, font_hash)
+      )
+      |> add_specs_to_graph(
+        CustomComponents.github_handle(github_text, {twitter_x, twitter_y + 100}, font_hash)
+      )
+      |> add_specs_to_graph(
+        CustomComponents.slack_handle(slack_text, {twitter_x, twitter_y + 200}, font_hash)
       )
 
     {:ok, %{graph: this_graph, viewport: opts[:viewport]}, push: this_graph}

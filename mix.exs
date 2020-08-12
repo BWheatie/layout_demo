@@ -25,8 +25,7 @@ defmodule LayoutDemo.MixProject do
     [
       {:scenic, "~> 0.10"},
       {:scenic_driver_glfw, "~> 0.10", targets: :host},
-      {:scenic_layout_o_matic, path: "/Users/benwheat/workspace/layout_o_matic"},
-      {:mogrify, "~> 0.7.3"}
+      {:scenic_layout_o_matic, path: "~/workspace/scenic_layout_o_matic"}
     ]
   end
 end

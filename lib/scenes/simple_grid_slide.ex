@@ -37,9 +37,9 @@ defmodule SimpleGridSlide do
       graph
       |> Graph.modify(:simple_grid_title_text, fn t -> update_opts(t, hidden: true) end)
       |> add_specs_to_graph(
-        Grid.simple_grid(
-          vp_size,
+        Grid.simple(
           {0, 0},
+          vp_size,
           [
             :simple_grid,
             :simple_grid,

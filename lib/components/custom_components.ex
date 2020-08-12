@@ -8,16 +8,16 @@ defmodule CustomComponents do
   @slack_path Application.app_dir(:layout_demo, ["priv", "static", "slack.png"])
   @slack_hash Scenic.Cache.Support.Hash.file!(@slack_path, :sha)
 
-  def twitter_handle(string, translate, font_size \\ 60),
-    do: handle(@twitter_hash, string, translate, font_size, :twitter)
+  def twitter_handle(string, translate, font_size \\ 60, font),
+    do: handle(@twitter_hash, string, translate, font_size, :twitter, font)
 
-  def github_handle(string, translate, font_size \\ 60),
-    do: handle(@github_hash, string, translate, font_size, :github)
+  def github_handle(string, translate, font_size \\ 60, font),
+    do: handle(@github_hash, string, translate, font_size, :github, font)
 
-  def slack_handle(string, translate, font_size \\ 60),
-    do: handle(@slack_hash, string, translate, font_size, :slack)
+  def slack_handle(string, translate, font_size \\ 60, font),
+    do: handle(@slack_hash, string, translate, font_size, :slack, font)
 
-  def handle(image, string, {x, y} = translate, font_size, id) do
+  def handle(image, string, {x, y} = translate, font_size, id, font) do
     rect_id =
       id
       |> Atom.to_string()
@@ -36,7 +36,13 @@ defmodule CustomComponents do
 
     [
       rect_spec({60, 60}, fill: {:image, image}, t: {x - 80, y - 45}, id: rect_id),
-      text_spec("@" <> string, fill: :black, font_size: font_size, t: translate, id: text_id)
+      text_spec("@" <> string,
+        fill: :black,
+        font_size: font_size,
+        t: translate,
+        id: text_id,
+        font: font
+      )
     ]
   end
 end

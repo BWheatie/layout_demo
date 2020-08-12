@@ -57,7 +57,7 @@ defmodule ScenicSlide do
       ) do
     this_graph =
       graph
-      |> circle(50, stroke: {2, :black}, t: {100, 100})
+      |> circle(50, stroke: {2, :black}, t: {100, 100}, :scenic_things)
 
     {:noreply, %{graph: this_graph, viewport: vp}, push: this_graph}
   end
@@ -69,7 +69,7 @@ defmodule ScenicSlide do
       ) do
     this_graph =
       graph
-      |> text("This is text that runs off", fill: :black, t: {1467, 100})
+      |> text("This is text that runs off", fill: :black, t: {1467, 100}, :scenic_things)
 
     {:noreply, %{graph: this_graph, viewport: vp}, push: this_graph}
   end
@@ -127,6 +127,7 @@ defmodule ScenicSlide do
       graph
       |> Graph.modify(:scenic_title_text, fn t -> update_opts(t, hidden: true) end)
       |> Graph.modify(:scenic_logo, fn t -> update_opts(t, hidden: true) end)
+      |> Graph.modify(:scenic_things, fn t -> update_opts(t, hidden: true) end)
       |> Graph.modify(:scenic_button, fn t -> update_opts(t, hidden: true) end)
 
     state = Map.replace!(state, :graph, this_hidden_graph)
@@ -143,6 +144,7 @@ defmodule ScenicSlide do
       graph
       |> Graph.modify(:scenic_title_text, fn t -> update_opts(t, hidden: true) end)
       |> Graph.modify(:scenic_logo, fn t -> update_opts(t, hidden: true) end)
+      |> Graph.modify(:scenic_things, fn t -> update_opts(t, hidden: true) end)
       |> Graph.modify(:scenic_button, fn t -> update_opts(t, hidden: true) end)
 
     state = Map.replace!(state, :graph, this_hidden_graph)
@@ -155,6 +157,7 @@ defmodule ScenicSlide do
       graph
       |> Graph.modify(:scenic_title_text, fn t -> update_opts(t, hidden: true) end)
       |> Graph.modify(:scenic_logo, fn t -> update_opts(t, hidden: true) end)
+      |> Graph.modify(:scenic_things, fn t -> update_opts(t, hidden: true) end)
       |> Graph.modify(:scenic_button, fn t -> update_opts(t, hidden: true) end)
 
     state = Map.replace!(state, :graph, this_hidden_graph)
